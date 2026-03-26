@@ -8,21 +8,20 @@ import io
 from uuid import uuid4
 
 from functions import (
-    # Existing
     Number_rows, Number_columns, data_info, data_desc,
     NULL_Percentage, Number_duplicates, col_type, Number_Uniques,
     calculate_skewness, skew_type, recommend_imputation_method,
-    # New — statistical depth
+    # statistical depth
     calculate_kurtosis, normality_test, value_entropy, correlation_matrix,
-    # New — outlier detection
+    # outlier detection
     detect_outliers,
-    # New — imputation apply
+    # imputation apply
     apply_imputation,
-    # New — dtype inference
+    # dtype inference
     suggest_dtypes,
-    # New — ML readiness
+    # ML readiness
     encoding_suggestions, feature_importance_proxy, class_balance,
-    # New — auto report
+    # auto report
     full_eda_report,
 )
 
@@ -44,10 +43,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# =========================
 # Session store
-# (replaces global df — supports multiple concurrent users)
-# =========================
 sessions: dict[str, pd.DataFrame] = {}
 
 MAX_FILE_SIZE_MB = 50
@@ -152,9 +148,6 @@ def delete_session(session_id: str):
     return {"deleted": session_id}
 
 
-# =========================
-# Basic data endpoints
-# =========================
 @app.post("/shape")
 def shape(session_id: str = Query(...)):
     df = get_df(session_id)
@@ -198,10 +191,6 @@ def column_unique(col: str, session_id: str = Query(...)):
     require_col(df, col)
     return {"column": col, "unique": Number_Uniques(df, col)}
 
-
-# =========================
-# Chart endpoints
-# =========================
 @app.post("/chart/distribution/{col}")
 def distribution(col: str, session_id: str = Query(...)):
     df = get_df(session_id)
@@ -268,9 +257,7 @@ def box_plot(col: str, session_id: str = Query(...)):
     }
 
 
-# =========================
-# Statistical depth (NEW)
-# =========================
+# Statistical depth 
 @app.post("/column/skewness/{col}")
 def column_skewness(col: str, session_id: str = Query(...)):
     df = get_df(session_id)
@@ -343,9 +330,7 @@ def correlation(session_id: str = Query(...)):
     return correlation_matrix(df)
 
 
-# =========================
-# Outlier detection (NEW)
-# =========================
+# Outlier detection 
 @app.post(
     "/outliers/{col}",
     summary="Detect outliers using IQR or Z-score",
@@ -366,9 +351,7 @@ def outliers(
     return detect_outliers(df, col, method=method)
 
 
-# =========================
-# Imputation (NEW — apply it)
-# =========================
+# Imputation
 @app.post(
     "/imputation/{col}/recommend",
     summary="Get imputation method recommendation",
@@ -404,9 +387,7 @@ def imputation_apply(col: str, body: ImputeRequest, session_id: str = Query(...)
     return result
 
 
-# =========================
 # Data quality (NEW)
-# =========================
 @app.post(
     "/suggest/dtypes",
     summary="Suggest better data types for each column",
@@ -422,9 +403,7 @@ def suggest_data_types(session_id: str = Query(...)):
     return suggest_dtypes(df)
 
 
-# =========================
-# ML readiness (NEW)
-# =========================
+# ML readiness 
 @app.post(
     "/ml/encoding_suggestions",
     summary="Recommend encoding strategy for categorical columns",
@@ -475,9 +454,7 @@ def ml_class_balance(col: str, session_id: str = Query(...)):
     return class_balance(df, col)
 
 
-# =========================
-# Auto EDA report (NEW)
-# =========================
+# Auto EDA report
 @app.post(
     "/report",
     summary="Full auto EDA report — one call, everything",
