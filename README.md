@@ -9,7 +9,6 @@
 
 > **Rawlytics** is a full-stack, intelligent data profiling and machine learning readiness platform. Upload your raw datasets and instantly receive production-grade statistical insights, automated data cleaning recommendations, and feature engineering strategies—all wrapped in a sleek, modern UI.
 
-![Rawlytics Banner](./docs/banner.png) *(Note: Add the generated infographic image here)*
 
 ## ✨ Why Rawlytics?
 Data scientists and analysts spend up to 80% of their time cleaning and profiling data. Rawlytics automates the tedious "first steps" of a data pipeline. Whether you are checking for statistical normality, dealing with missing values, or preparing categorical features for a machine learning model, Rawlytics handles the heavy lifting in milliseconds.
@@ -65,5 +64,5 @@ Follow these steps to get Rawlytics running locally on your machine.
 
 ### 1. Clone the Repository
 ```bash
-git clone [https://github.com/yourusername/rawlytics.git](https://github.com/yourusername/rawlytics.git)
+git clone [https://github.com/MazenHisham1/rawlytics.git](https://github.com/MazenHisham1/rawlytics.git)
 cd rawlytics
