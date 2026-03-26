@@ -4,10 +4,6 @@ from scipy import stats as scipy_stats
 from sklearn.feature_selection import mutual_info_classif, mutual_info_regression
 
 
-# =========================
-# Existing functions
-# =========================
-
 def data_info(data):
     return {
         "rows": data.shape[0],
